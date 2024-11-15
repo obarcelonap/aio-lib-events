@@ -114,6 +114,15 @@ describe('SDK init test', () => {
     expect(sdkClient.httpOptions.eventsBaseURL).toBe(EVENTS_BASE_URL)
     expect(sdkClient.httpOptions.eventsIngressURL).toBe(EVENTS_INGRESS_URL)
   })
+  it('sdk init test with stage env in httpOptions', async () => {
+    getCliEnv.mockReturnValue(undefined)
+    const sdkClient = await sdk.init(gOrganizationId, gApiKey, gAccessToken, { env: 'stage' })
+    expect(sdkClient.organizationId).toBe(gOrganizationId)
+    expect(sdkClient.apiKey).toBe(gApiKey)
+    expect(sdkClient.accessToken).toBe(gAccessToken)
+    expect(sdkClient.httpOptions.eventsBaseURL).toBe(EVENTS_BASE_URL_STAGE)
+    expect(sdkClient.httpOptions.eventsIngressURL).toBe(EVENTS_INGRESS_URL_STAGE)
+  })
   it('sdk init test - no imsOrgId', async () => {
     return expect(sdk.init(null, gApiKey, gAccessToken)).rejects.toEqual(
       new errorSDK.codes.ERROR_SDK_INITIALIZATION({ messageValues: 'organizationId' })

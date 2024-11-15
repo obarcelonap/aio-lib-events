@@ -143,7 +143,7 @@ and max number of retries
     * [.organizationId](#EventsCoreAPI+organizationId)
     * [.apiKey](#EventsCoreAPI+apiKey)
     * [.accessToken](#EventsCoreAPI+accessToken)
-    * [.init(organizationId, apiKey, accessToken, [httpOptions])](#EventsCoreAPI+init) ⇒ [<code>Promise.&lt;EventsCoreAPI&gt;</code>](#EventsCoreAPI)
+    * [.init(organizationId, apiKey, accessToken, env, [httpOptions])](#EventsCoreAPI+init) ⇒ [<code>Promise.&lt;EventsCoreAPI&gt;</code>](#EventsCoreAPI)
     * [.getAllProviders(consumerOrgId, providerOptions)](#EventsCoreAPI+getAllProviders) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.getProvider(providerId, [fetchEventMetadata])](#EventsCoreAPI+getProvider) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.createProvider(consumerOrgId, projectId, workspaceId, body)](#EventsCoreAPI+createProvider) ⇒ <code>Promise.&lt;object&gt;</code>
@@ -193,7 +193,7 @@ The JWT Token for the integration with IO Management API scope
 **Kind**: instance property of [<code>EventsCoreAPI</code>](#EventsCoreAPI)  
 <a name="EventsCoreAPI+init"></a>
 
-### eventsCoreAPI.init(organizationId, apiKey, accessToken, [httpOptions]) ⇒ [<code>Promise.&lt;EventsCoreAPI&gt;</code>](#EventsCoreAPI)
+### eventsCoreAPI.init(organizationId, apiKey, accessToken, env, [httpOptions]) ⇒ [<code>Promise.&lt;EventsCoreAPI&gt;</code>](#EventsCoreAPI)
 Initialize SDK.
 
 **Kind**: instance method of [<code>EventsCoreAPI</code>](#EventsCoreAPI)  
@@ -204,6 +204,7 @@ Initialize SDK.
 | organizationId | <code>string</code> | The organization id from your integration |
 | apiKey | <code>string</code> | The api key from your integration |
 | accessToken | <code>string</code> | JWT Token for the integration with IO Management API scope |
+| env | <code>string</code> | the CLI environment |
 | [httpOptions] | [<code>EventsCoreAPIOptions</code>](#EventsCoreAPIOptions) | Options to configure API calls |
 
 <a name="EventsCoreAPI+getAllProviders"></a>
@@ -546,8 +547,9 @@ Returns a Promise that resolves with a new EventsCoreAPI object.
 | --- | --- | --- |
 | [timeout] | <code>number</code> | Http request timeout in ms (optional) |
 | [retries] | <code>number</code> | Number of retries in case of 5xx errors. Default 0 (optional) |
-| [eventsBaseURL] | <code>string</code> | Base URL for Events Default https://api.adobe.io (optional) |
-| [eventsIngressURL] | <code>string</code> | Ingress URL for Events. Default https://eventsingress.adobe.io (optional) |
+| [env] | <code>string</code> | Environment to reconfigure events URLs. Values stage or prod. Default prod (optional) |
+| [eventsBaseURL] | <code>string</code> | Base URL for Events. Has precedence over env option. Default https://api.adobe.io (optional) |
+| [eventsIngressURL] | <code>string</code> | Ingress URL for Events.  Has precedence over env option. Default https://eventsingress.adobe.io (optional) |
 
 <a name="ProviderFilterOptions"></a>
 

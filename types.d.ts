@@ -1,12 +1,14 @@
 /**
  * @property [timeout] - Http request timeout in ms (optional)
  * @property [retries] - Number of retries in case of 5xx errors. Default 0 (optional)
- * @property [eventsBaseURL] - Base URL for Events Default https://api.adobe.io (optional)
- * @property [eventsIngressURL] - Ingress URL for Events. Default https://eventsingress.adobe.io (optional)
+ * @property [env] - Environment to reconfigure events URLs. Values stage or prod. Default prod (optional)
+ * @property [eventsBaseURL] - Base URL for Events. Has precedence over env option. Default https://api.adobe.io (optional)
+ * @property [eventsIngressURL] - Ingress URL for Events.  Has precedence over env option. Default https://eventsingress.adobe.io (optional)
  */
 declare type EventsCoreAPIOptions = {
     timeout?: number;
     retries?: number;
+    env?: string;
     eventsBaseURL?: string;
     eventsIngressURL?: string;
 };
@@ -33,10 +35,11 @@ declare class EventsCoreAPI {
      * @param organizationId - The organization id from your integration
      * @param apiKey - The api key from your integration
      * @param accessToken - JWT Token for the integration with IO Management API scope
+     * @param env - the CLI environment
      * @param [httpOptions] - Options to configure API calls
      * @returns returns object of the class EventsCoreAPI
      */
-    init(organizationId: string, apiKey: string, accessToken: string, httpOptions?: EventsCoreAPIOptions): Promise<EventsCoreAPI>;
+    init(organizationId: string, apiKey: string, accessToken: string, env: string, httpOptions?: EventsCoreAPIOptions): Promise<EventsCoreAPI>;
     /**
      * Http options {retries, timeout}
      */

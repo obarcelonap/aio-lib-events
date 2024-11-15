@@ -44,8 +44,9 @@ const APPLICATION_HAL_JSON = 'application/hal+json'
  * @typedef {object} EventsCoreAPIOptions
  * @property {number} [timeout] Http request timeout in ms (optional)
  * @property {number} [retries] Number of retries in case of 5xx errors. Default 0 (optional)
- * @property {string} [eventsBaseURL] Base URL for Events Default https://api.adobe.io (optional)
- * @property {string} [eventsIngressURL] Ingress URL for Events. Default https://eventsingress.adobe.io (optional)
+ * @property {string} [env] Environment to reconfigure events URLs. Values stage or prod. Default prod (optional)
+ * @property {string} [eventsBaseURL] Base URL for Events. Has precedence over env option. Default https://api.adobe.io (optional)
+ * @property {string} [eventsIngressURL] Ingress URL for Events.  Has precedence over env option. Default https://eventsingress.adobe.io (optional)
  */
 /**
  * Returns a Promise that resolves with a new EventsCoreAPI object.
@@ -771,12 +772,9 @@ class EventsCoreAPI {
 
   __initLibURLs (env) {
     this.httpOptions = this.httpOptions || {}
-    let eventsBaseUrl = EVENTS_BASE_URL[env]
-    if (!eventsBaseUrl) {
-      eventsBaseUrl = EVENTS_BASE_URL[DEFAULT_ENV]
-      env = DEFAULT_ENV
-    }
-    const eventsIngressUrl = EVENTS_INGRESS_URL[env]
+    const effectiveEnv = env || this.httpOptions.env || DEFAULT_ENV
+    const eventsBaseUrl = EVENTS_BASE_URL[effectiveEnv]
+    const eventsIngressUrl = EVENTS_INGRESS_URL[effectiveEnv]
     this.httpOptions.eventsBaseURL = this.httpOptions.eventsBaseURL || eventsBaseUrl
     this.httpOptions.eventsIngressURL = this.httpOptions.eventsIngressURL || eventsIngressUrl
   }
